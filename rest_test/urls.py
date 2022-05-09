@@ -7,8 +7,8 @@ router = DefaultRouter()
 router.register(r'cars', CarViewSet, 'car')
 
 
-for url in router.urls:
-    print(url, '\n')
+# for url in router.urls:
+#     print(url, '\n')
     
     
     
