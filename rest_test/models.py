@@ -1,5 +1,5 @@
 from django.db import models
-from rest_framework import serializers
+
 
 
 class Car(models.Model):
@@ -10,7 +10,3 @@ class Car(models.Model):
     
     
 
-class CarSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Car
-        fields = ['id', 'model', 'maker', 'year', 'vin']
