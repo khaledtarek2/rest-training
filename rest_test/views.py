@@ -34,13 +34,11 @@ class CarViewSet(viewsets.ViewSet):
     serializer_class = CarSerializer
     
     def list(self, request, format=None):
-        queryset = Car.objects.all()
-        serializer = CarSerializer(queryset, many=True)
+        serializer = CarSerializer(self.queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None,format=None):
-        queryset = Car.objects.all()
-        car = get_object_or_404(queryset, pk=pk)
+        car = get_object_or_404(self.queryset, pk=pk)
         serializer = CarSerializer(car)
         return Response(serializer.data)
 
@@ -59,6 +57,7 @@ class CarViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        return Response(serializer.errors)
        
        
 
