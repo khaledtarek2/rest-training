@@ -1,14 +1,10 @@
-from turtle import update
-from django.shortcuts import render
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication
-from rest_framework import generics
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin 
 from .models import Car
 from .serializers import CarSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
+from django_filters import rest_framework as filters
+from .filters import CarFilter
 
 
 
@@ -32,6 +28,8 @@ class CarViewSet(viewsets.ViewSet):
     """
     queryset = Car.objects.all()
     serializer_class = CarSerializer
+    filter_backends = (filters.DjangoFilterBackend)
+    filterset_class = CarFilter
     
     def list(self, request, format=None):
         serializer = CarSerializer(self.queryset, many=True)
