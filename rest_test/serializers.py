@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import Car
+from .models import Car, Collection
 
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
-        fields = ['id', 'model', 'maker', 'release_year', 'vin']
+        fields = ['id', 'model', 'maker', 'release_year', 'vin', 'owner', 'collection']
         
         
         def update(self, instance, validated_data):
@@ -13,3 +13,9 @@ class CarSerializer(serializers.ModelSerializer):
             instance.year = validated_data.get('release_year', instance.release_year)
             instance.vin = validated_data.get('vin', instance.vin)
             return instance
+        
+
+class CollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = ['id', 'name', 'created_at']
