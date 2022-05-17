@@ -15,6 +15,11 @@ class CarSerializer(serializers.ModelSerializer):
             return instance
         
 
+class CarCollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
+        fields = ['id', 'collection']
+
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
