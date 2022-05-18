@@ -21,7 +21,7 @@ class Car(models.Model):
     release_year = models.IntegerField()
     vin = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    collection = models.ForeignKey(Collection, on_delete=models.CASCADE, null=True)
+    collection = models.ManyToManyField(Collection)
     
     
     def __str__(self):

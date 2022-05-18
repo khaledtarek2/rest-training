@@ -9,6 +9,7 @@ from .filters import CarFilter, CollectionFilter
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsCarOwner
+from rest_framework.renderers import JSONRenderer
         
 
 class CarViewSet(viewsets.ModelViewSet):
@@ -29,7 +30,8 @@ class CarViewSet(viewsets.ModelViewSet):
         serializer = CarCollectionSerializer(car, request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
+            return Response(serializer.data)
+        return Response(serializer.errors)
 
 
 
@@ -108,12 +110,6 @@ class CollectionViewSet(viewsets.ModelViewSet):
     
 
 
-    # def add_to_collection(self, request, pk=None, format=None):
-    #     car = get_object_or_404(Car, pk=pk)
-    #     serializer = CarSerializer(car)
-    #     collection_serializer = CollectionSerializer(Collection, request.data)
-    #     return Response(collection_serializer.data)
-    
     
 
 # class CarViewSet(viewsets.ViewSet):
