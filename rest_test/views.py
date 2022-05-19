@@ -10,7 +10,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsCarOwner
 from rest_framework.renderers import JSONRenderer
-        
+
 
 class CarViewSet(viewsets.ModelViewSet):
     """
@@ -28,6 +28,27 @@ class CarViewSet(viewsets.ModelViewSet):
     def update_car_collection(self, request, pk=None, format=None):
         car = Car.objects.get(pk=pk)
         serializer = CarCollectionSerializer(car, request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    
+    
+    @action(detail=True, methods=['GET', 'Put'])
+    def add_to_collection(self, request, pk=None, format=None):
+        car = Car.objects.get(pk=pk)
+        collectionss = Collection.objects.get(pk=pk)
+        serializer = CarCollectionSerializer(car, request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    
+    @action(detail=True, methods=['GET', 'Put'])
+    def remove_from_collection(self, request, pk=None, format=None):
+        car = Car.objects.get(pk=pk)
+        serializer = CarCollectionSerializer(car, request.data)
+        serializer.delete(car, request.data, pk=pk)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
